@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contato - Susan Capelo</title>
+  <link rel="stylesheet" href="estilos.css"> 
+</head>
+<body>
+  <header>
+    <h1>Entre em Contato</h1>
+    <nav>
+      <a href="index.html">Início</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="formulario-contato">
+      <h2>Envie sua mensagem</h2>
+      <form id= "formulario-contato" action="https://formspree.io/f/mnnbjqql" method="POST">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="email">Seu e-mail:</label>
+        <input type="email" id="email" name="_replyto" required>
+
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+
+        <button type="submit">Enviar</button>
+      </form>
+
+    <div id="popup-sucesso">
+        <div class="popup-conteudo">
+        <p>E-mail enviado com sucesso! 😊</p>
+        <button id="popup-ok">OK</button>
+        </div>
+    </div>
+
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 - Susan Capelo</p>
+  </footer>
+
+  <script>
+const form = document.getElementById("formulario-contato");
+const popup = document.getElementById("popup-sucesso");
+const popupBtn = document.getElementById("popup-ok");
+
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const data = new FormData(form);
+
+  fetch("https://formspree.io/f/mnnbjqql", { 
+    method: "POST",
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(response => {
+    if (response.ok) {
+      // mostra o popup
+      popup.style.display = "flex";
+      form.reset();
+    } else {
+      alert("Ocorreu um erro. Tente novamente.");
+    }
+  })
+  .catch(error => {
+    console.error(error);
+    alert("Ocorreu um erro. Tente novamente.");
+  });
+});
+
+// fecha o popup ao clicar em OK
+popupBtn.addEventListener("click", function() {
+  popup.style.display = "none";
+});
+</script>
+
+</body>
+</html>
